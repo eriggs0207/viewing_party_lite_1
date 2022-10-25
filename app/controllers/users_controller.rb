@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
-      redirect_to root_path
+      redirect_to user_path(user)
     else
       flash[:error] = "Password or email is incorrect"
       render :login_form
