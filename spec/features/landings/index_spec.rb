@@ -18,12 +18,10 @@ RSpec.describe 'Landing Page' do
       visit '/'
 
       within '#users-list' do
-        expect(page).to have_content(@users_1[0].name)
-        expect(page).to have_content(@users_1[1].name)
+        expect(page).to have_content(@users_1[0].email)
+        expect(page).to have_content(@users_1[1].email)
+        expect(page).to have_content(@users_1[2].email)
       end
-
-      click_link @users_1[0].name.to_s
-      expect(current_path).to eq(user_path(@users_1[0]))
     end
   end
 end

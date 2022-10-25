@@ -18,7 +18,7 @@ RSpec.describe 'Register Page' do
       fill_in 'Confirm password:', with: "Password1234!"
       click_button('Register')
 
-      expect(current_path).to eq(user_path(@users_1.last.id + 1))
+      expect(current_path).to eq(dashboard_path)
       expect(page).to have_content("Erik profile successfully created")
     end
 

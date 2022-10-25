@@ -9,12 +9,12 @@ Rails.application.routes.draw do
   get '/login', to: 'users#login_form'
   post '/login', to: 'users#login'
 
-  resources :users, only: %i[show create], path: 'dashboard' do
-    # post '/discover', to: 'movies#index' #discover controller with search, that searches user from there
-    resources :discover, only: :index
-    resources :movies, only: %i[show index] do
-      resources :parties, only: %i[new create]
-    end
+  get 'dashboard', to: 'users#show'
+  # resources :users, only: [:show], path: 'dashboard'
+  resources :discover, only: :index
+  resources :movies, only: %i[show index] do
+    resources :parties, only: %i[new create]
   end
-  resources :users, only: :new, path: 'register'
+  resources :users, only: [:new, :create], path: 'register'
+  # resources :users, only: %i[create]
 end

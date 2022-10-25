@@ -2,7 +2,7 @@
 
 class MoviesController < ApplicationController
   def show
-    @user = User.find(params[:user_id])
+    @user = user
     @movie = MovieFacade.movie_details(params[:id])
     @cast = MovieFacade.lead_roles(params[:id])
     @reviews = MovieFacade.movie_critics(params[:id])
@@ -14,6 +14,6 @@ class MoviesController < ApplicationController
               else
                 MovieFacade.top_20_movies
               end
-    @user = User.find(params[:user_id])
+    @user = user
   end
 end

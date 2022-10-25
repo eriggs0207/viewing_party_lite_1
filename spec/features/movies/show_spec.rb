@@ -6,6 +6,12 @@ RSpec.describe 'User Movie Show Page' do
   describe 'user visits the movie show page' do
     before :each do
       @user_1 = create(:user)
+      visit login_path
+
+      fill_in :email, with: "#{@user_1.email}"
+      fill_in :password, with: "#{@user_1.password}"
+
+      click_on "Log In"
       movie = File.read('./spec/fixtures/fight_club.json')
       movie_data = JSON.parse(movie, symbolize_names: true)
       @fight_club = Movie.new(movie_data)
@@ -24,20 +30,20 @@ RSpec.describe 'User Movie Show Page' do
     end
 
     it 'has a button to create a viewing party' do
-      visit user_movie_path(@user_1, @fight_club.id)
+      visit movie_path(@fight_club.id)
       click_button 'Create Viewing Party'
-      expect(current_path).to eq(new_user_movie_party_path(@user_1, @fight_club.id))
+      expect(current_path).to eq(new_movie_party_path(@fight_club.id))
     end
 
     it 'has a button to return to discover page' do
-      visit user_movie_path(@user_1, @fight_club.id)
+      visit movie_path(@fight_club.id)
 
       click_button 'Discover Page'
-      expect(current_path).to eq(user_discover_index_path(@user_1))
+      expect(current_path).to eq(discover_index_path)
     end
 
     it 'shows all the movie information' do
-      visit user_movie_path(@user_1, @fight_club.id)
+      visit movie_path(@fight_club.id)
 
       expect(page).to have_content(@fight_club.original_title)
 
@@ -56,7 +62,6 @@ RSpec.describe 'User Movie Show Page' do
 
       within('#review-details') do
         expect(page).to have_content(@fight_club_reviews.first.author)
-        # expect(page).to have_content(@fight_club_reviews.last.content)
       end
     end
   end

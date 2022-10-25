@@ -9,8 +9,8 @@ RSpec.describe 'User Dashboard Page' do
       @user_2 = create(:user)
       @user_3 = create(:user)
 
-      @party_1 = create(:party, movie_id: 278, host_id: @user_3.id) # shawshank
-      @party_2 = create(:party, movie_id: 889, host_id: @user_3.id) # flinstones
+      @party_1 = create(:party, movie_id: 278, host_id: @user_3.id) 
+      @party_2 = create(:party, movie_id: 889, host_id: @user_3.id)
       @party_3 = create(:party, movie_id: 254, host_id: @user_3.id)
       @party_4 = create(:party, movie_id: 889, host_id: @user_3.id)
       @party_5 = create(:party, movie_id: 254, host_id: @user_3.id)
@@ -29,28 +29,65 @@ RSpec.describe 'User Dashboard Page' do
       create(:user_parties, user_id: @user_3.id, party_id: @party_7.id)
       create(:user_parties, user_id: @user_2.id, party_id: @party_7.id)
       create(:user_parties, user_id: @user_1.id, party_id: @party_7.id)
+
+
     end
 
     it 'shows users name at the top of the page' do
-      visit user_path(@user_1)
+      visit login_path
+
+      fill_in :email, with: "#{@user_1.email}"
+      fill_in :password, with: "#{@user_1.password}"
+
+      click_on "Log In"
+
+      visit dashboard_path
       expect(page).to have_content("#{@user_1.name}'s Dashboard")
 
-      visit user_path(@user_2)
+      visit login_path
+
+      fill_in :email, with: "#{@user_2.email}"
+      fill_in :password, with: "#{@user_2.password}"
+
+      click_on "Log In"
+
+      visit dashboard_path
       expect(page).to have_content("#{@user_2.name}'s Dashboard")
     end
 
     it 'has a button to discover movies' do
-      visit user_path(@user_1)
-      click_button 'Discover Movies'
-      expect(current_path).to eq(user_discover_index_path(@user_1))
+      visit login_path
 
-      visit user_path(@user_2)
+      fill_in :email, with: "#{@user_1.email}"
+      fill_in :password, with: "#{@user_1.password}"
+
+      click_on "Log In"
+
+      visit dashboard_path
       click_button 'Discover Movies'
-      expect(current_path).to eq(user_discover_index_path(@user_2))
+      expect(current_path).to eq(discover_index_path)
+
+      visit login_path
+
+      fill_in :email, with: "#{@user_2.email}"
+      fill_in :password, with: "#{@user_2.password}"
+
+      click_on "Log In"
+
+      visit dashboard_path
+      click_button 'Discover Movies'
+      expect(current_path).to eq(discover_index_path)
     end
 
     it 'shows the viewing parties the user has been invited to with details', :vcr do
-      visit user_path(@user_3)
+      visit login_path
+
+      fill_in :email, with: "#{@user_3.email}"
+      fill_in :password, with: "#{@user_3.password}"
+
+      click_on "Log In"
+
+      visit dashboard_path
 
       within('#attending') do
         within("#party-#{@party_7.id}") do
@@ -66,11 +103,18 @@ RSpec.describe 'User Dashboard Page' do
         end
       end
 
-      expect(current_path).to eq(user_movie_path(@user_3, @party_7.movie_id))
+      expect(current_path).to eq(movie_path(@party_7.movie_id))
     end
 
     it 'shows the viewing parties the user has created with details (host)' do
-      visit user_path(@user_1)
+      visit login_path
+
+      fill_in :email, with: "#{@user_1.email}"
+      fill_in :password, with: "#{@user_1.password}"
+
+      click_on "Log In"
+
+      visit dashboard_path
 
       within('#hosting') do
         within("#party-#{@party_6.id}") do
@@ -85,7 +129,7 @@ RSpec.describe 'User Dashboard Page' do
           click_link 'The Flintstones in Viva Rock Vegas'
         end
       end
-      expect(current_path).to eq(user_movie_path(@user_1, @party_4.movie_id)) # fix routing
+      expect(current_path).to eq(movie_path(@party_4.movie_id))
     end
   end
 end
