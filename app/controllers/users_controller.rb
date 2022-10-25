@@ -15,15 +15,34 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      flash[:success] = "#{@user.name} profile successfully created"
       redirect_to user_path(@user)
+    elsif params[:password] != params[:password_confirmation]
+      flash[:error] = "passwords do not match"
+      redirect_to '/register/new'
     else
       redirect_to '/register/new'
+    end
+  end
+
+  def login_form
+  end
+
+  def login
+    user = User.find_by(email: params[:email])
+    if user.authenticate(params[:password])
+      session[:user_id] = user.id
+      flash[:success] = "Welcome, #{user.name}!"
+      redirect_to root_path
+    else
+      flash[:error] = "Password or email is incorrect"
+      render :login_form
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation)
   end
 end
