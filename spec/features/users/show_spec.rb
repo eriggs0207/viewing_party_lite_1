@@ -34,7 +34,7 @@ RSpec.describe 'User Dashboard Page' do
     end
 
     it 'shows users name at the top of the page' do
-      visit new_session_path
+      visit login_path
 
       fill_in :email, with: "#{@user_1.email}"
       fill_in :password, with: "#{@user_1.password}"
@@ -44,7 +44,7 @@ RSpec.describe 'User Dashboard Page' do
       visit dashboard_path
       expect(page).to have_content("#{@user_1.name}'s Dashboard")
 
-      visit new_session_path
+      visit login_path
 
       fill_in :email, with: "#{@user_2.email}"
       fill_in :password, with: "#{@user_2.password}"
@@ -56,7 +56,7 @@ RSpec.describe 'User Dashboard Page' do
     end
 
     it 'has a button to discover movies' do
-      visit new_session_path
+      visit login_path
 
       fill_in :email, with: "#{@user_1.email}"
       fill_in :password, with: "#{@user_1.password}"
@@ -67,7 +67,7 @@ RSpec.describe 'User Dashboard Page' do
       click_button 'Discover Movies'
       expect(current_path).to eq(discover_index_path)
 
-      visit new_session_path
+      visit login_path
 
       fill_in :email, with: "#{@user_2.email}"
       fill_in :password, with: "#{@user_2.password}"
@@ -80,7 +80,7 @@ RSpec.describe 'User Dashboard Page' do
     end
 
     it 'shows the viewing parties the user has been invited to with details', :vcr do
-      visit new_session_path
+      visit login_path
 
       fill_in :email, with: "#{@user_3.email}"
       fill_in :password, with: "#{@user_3.password}"
@@ -107,7 +107,7 @@ RSpec.describe 'User Dashboard Page' do
     end
 
     it 'shows the viewing parties the user has created with details (host)' do
-      visit new_session_path
+      visit login_path
 
       fill_in :email, with: "#{@user_1.email}"
       fill_in :password, with: "#{@user_1.password}"

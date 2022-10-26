@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  
   def new
   end
 
@@ -10,8 +11,13 @@ class SessionsController < ApplicationController
       redirect_to dashboard_path
     else
       flash[:error] = "Password or email is incorrect"
-      redirect_to new_session_path
+      redirect_to login_path
     end
+  end
+
+  def destroy
+    session.clear
+    redirect_to root_path
   end
 
 end

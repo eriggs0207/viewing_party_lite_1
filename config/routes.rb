@@ -6,10 +6,10 @@ Rails.application.routes.draw do
   # get '/', to: 'landings#index' is the same?
   root 'landings#index'
 
-  resources :sessions, only: [:new, :create, :destroy]
-  # get '/login', to: 'users#login_form'
-  # post '/login', to: 'users#login'
-  # post '/login', to: 'users#login'
+  # resources :sessions
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
   get 'dashboard', to: 'users#show'
   # resources :users, only: [:show], path: 'dashboard'

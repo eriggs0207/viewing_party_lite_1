@@ -22,9 +22,9 @@ class UsersController < ApplicationController
       redirect_to dashboard_path
     elsif params[:password] != params[:password_confirmation]
       flash[:error] = "passwords do not match"
-      redirect_to '/register/new'
+      redirect_to new_user_path
     else
-      redirect_to '/register/new'
+      redirect_to new_user_path
     end
   end
 

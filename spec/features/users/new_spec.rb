@@ -9,7 +9,7 @@ RSpec.describe 'Register Page' do
     end
 
     it 'shows a form to input credentials then takes you to user dashboard' do
-      visit '/register/new'
+      visit new_user_path
 
       expect(page.has_field?).to eq(true)
       fill_in 'Name:', with: "Erik"
@@ -23,18 +23,18 @@ RSpec.describe 'Register Page' do
     end
 
     it 'redirects to /register/new if info is not complete' do
-      visit '/register/new'
+      visit new_user_path
 
       expect(page.has_field?).to eq(true)
       fill_in 'Name:', with: 'Sandy M'
 
       click_button('Register')
 
-      expect(current_path).to eq('/register/new')
+      expect(current_path).to eq(new_user_path)
     end
 
     it 'redirects to /register/new if info passwords do not match' do
-      visit '/register/new'
+      visit new_user_path
 
       expect(page.has_field?).to eq(true)
       fill_in 'Name:', with: 'Sandy M'
@@ -44,7 +44,7 @@ RSpec.describe 'Register Page' do
       click_button('Register')
 
 
-      expect(current_path).to eq('/register/new')
+      expect(current_path).to eq(new_user_path)
     end
   end
 end
