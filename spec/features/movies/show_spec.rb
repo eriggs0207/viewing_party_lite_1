@@ -6,7 +6,7 @@ RSpec.describe 'User Movie Show Page' do
   describe 'user visits the movie show page' do
     before :each do
       @user_1 = create(:user)
-      visit login_path
+      visit new_session_path
 
       fill_in :email, with: "#{@user_1.email}"
       fill_in :password, with: "#{@user_1.password}"

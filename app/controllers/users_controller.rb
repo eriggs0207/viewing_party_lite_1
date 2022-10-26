@@ -28,20 +28,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def login_form
-  end
-
-  def login
-    user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      flash[:success] = "Welcome, #{user.name}!"
-      redirect_to dashboard_path
-    else
-      flash[:error] = "Password or email is incorrect"
-      render :login_form
-    end
-  end
 
   private
 

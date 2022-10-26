@@ -9,13 +9,13 @@ RSpec.describe 'Landing Page' do
     end
 
     it 'shows landing page information' do
-      visit '/'
+      visit root_path
 
       expect(page).to have_content('Viewing Party Lite')
       click_button 'Create New User'
       expect(current_path).to eq(new_user_path)
 
-      visit '/'
+      visit root_path
 
       within '#users-list' do
         expect(page).to have_content(@users_1[0].email)

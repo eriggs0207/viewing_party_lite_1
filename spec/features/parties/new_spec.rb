@@ -19,7 +19,7 @@ RSpec.describe 'Viewing Party Page (new)' do
       create(:user_parties, user_id: @user_2.id, party_id: @party_1.id)
       create(:user_parties, user_id: @user_3.id, party_id: @party_1.id)
 
-      visit login_path
+      visit new_session_path
 
       fill_in :email, with: "#{@user_1.email}"
       fill_in :password, with: "#{@user_1.password}"

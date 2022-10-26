@@ -1,7 +1,7 @@
 <h1>Viewing Party Lite</h1>
 
 <p><%= button_to "Create New User", new_user_path, method: :get %></p>
-<p>Already have an account: <%= link_to "Log In", login_path%></p>
+<p>Already have an account: <%= link_to "Log In", new_session_path%></p>
 
 <div id="users-list">
   <% @users.each do |user| %>
