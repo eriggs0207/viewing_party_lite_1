@@ -3,12 +3,12 @@
 class PartiesController < ApplicationController
   def new
     @movie = MovieFacade.movie_details(params[:movie_id])
-    @user = User.find(params[:user_id])
+    @user = user
     @users = User.all
   end
 
   def create
-    @user = User.find(params[:user_id])
+    @user = user
     movie = MovieFacade.movie_details(params[:movie_id])
     @party = Party.new(party_params)
     @users = User.all
@@ -18,7 +18,7 @@ class PartiesController < ApplicationController
       @users.each do |user|
         UserParty.create!(user_id: user.id, party_id: @party.id) if params[user.id.to_s] == "1"
       end
-      redirect_to(user_path(@user))
+      redirect_to(dashboard_path)
     end
   end
 

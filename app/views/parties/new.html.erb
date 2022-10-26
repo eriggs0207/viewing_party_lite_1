@@ -1,5 +1,5 @@
 <h1><%= @movie.original_title %></h1>
-<%= form_with url: user_movie_parties_path(@user, @movie.id), method: :post, local: true do |form| %>
+<%= form_with url: movie_parties_path(@movie.id), method: :post, local: true do |form| %>
 <%= form.hidden_field :host_id, value: "#{@user.id}" %>
   <p><%= form.label :duration, "Duration:"%></p>
     <%= form.number_field :duration, min: @movie.runtime, value: @movie.runtime %>
